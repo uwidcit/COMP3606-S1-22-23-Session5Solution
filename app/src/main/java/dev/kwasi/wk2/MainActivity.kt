@@ -10,7 +10,6 @@ import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.Manifest.permission.ACCESS_FINE_LOCATION
 
 class MainActivity : AppCompatActivity() {
     private lateinit var wifiManager: WifiManager
@@ -42,7 +41,6 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun getWifiNetworks(): List<WifiNetwork> {
-        val wifiInfo = wifiManager.connectionInfo
         val wifiScanList = wifiManager.scanResults
         val wifiNetworks = mutableListOf<WifiNetwork>()
 
