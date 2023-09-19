@@ -4,14 +4,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!-- Add the textview below for showing the IDX identifier-->
-    <TextView
-        android:id="@+id/idxTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textStyle="bold" />
-
     <TextView
         android:id="@+id/ssidTextView"
         android:layout_width="match_parent"

@@ -5,19 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 
-class WifiListAdapter(private val wifiNetworks: List<WifiNetwork>) :
-    RecyclerView.Adapter<WifiListAdapter.ViewHolder>(), View.OnClickListener {
+class WifiListAdapter(private val wifiNetworks: List<WifiNetwork>, private val wifiNetworkClick: WifiNetworkClick) :
+    RecyclerView.Adapter<WifiListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ssidTextView: TextView = itemView.findViewById(R.id.ssidTextView)
         val strengthTextView: TextView = itemView.findViewById(R.id.strengthTextView)
+        val encryptionStateTextView: TextView = itemView.findViewById(R.id.encryptionState)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_wifi, parent, false)
-        view.setOnClickListener(this)
         return ViewHolder(view)
     }
 
@@ -26,14 +26,18 @@ class WifiListAdapter(private val wifiNetworks: List<WifiNetwork>) :
 
         holder.ssidTextView.text = wifiNetwork.ssid
         holder.strengthTextView.text = "Signal Strength: ${wifiNetwork.signalStrength} dBm"
+
+        if (wifiNetwork.hasPassword)
+            holder.encryptionStateTextView.text = "Passworded WiFi"
+        else
+            holder.encryptionStateTextView.text = "Open WiFi"
+
+        holder.itemView.setOnClickListener {
+            wifiNetworkClick.onWifiNetworkClicked(wifiNetwork)
+        }
     }
 
     override fun getItemCount(): Int {
         return wifiNetworks.size
-    }
-
-    override fun onClick(v: View) {
-        val ssidTextView = v.findViewById<TextView>(R.id.ssidTextView)
-        Log.e("CLICK", "I clicked the view: SSID = " + ssidTextView.text);
     }
 }
